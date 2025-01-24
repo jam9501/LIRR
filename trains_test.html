@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Delays: Scrollytelling Interactive</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="/Users/ainsleymartinez/Downloads/Long Island Herald/LIRR/Icon.png" alt="Icon Image" class="header-icon">
+        </div>
+        <div class="step" data-step="1">
+            <div id="trainGrid2022" class="train-grid"></div>
+
+            <div class="scrolly-text">
+                <p>In 2022, there were 8,691 train delays, shown in red, with 226,066 trains operating. Scroll down to see how the situation evolves in 2023.</p>
+            </div>
+        </div>
+
+        <div class="step" data-step="2">
+            <div id="trainGrid2023" class="train-grid"></div>
+            <strong><h2>2023</h2></strong>
+            <div class="scrolly-text">
+                <p>In 2023, 77,453 new trains were added, and in proportion to the previous year, delays almost doubled: with 17,064 delays. <br> The most common cause was train operations: meaning a technical train malfunction, such as a stuck door. </p>
+              </div>
+        </div>
+
+        <div class="step" data-step="3">
+            <div id="trainGrid2024" class="train-grid"></div>
+            <strong><h2>2024</h2></strong>
+            <div class="scrolly-text">
+                <p>By 2024, the number of trains continues to rise, with 316,000 trains total, <br> but the rate of delays stabilizes, with 11,480. <br> Note: the LIRR does not include trains less than six minutes late as a delay.</p>
+            </div>
+        </div>
+    </div>
+    <div class="step" data-step="4">
+        <iframe src="/Users/ainsleymartinez/Downloads/Long Island Herald/LIRR/times/times.html" width="100%" height="500px" style="border: none;"></iframe>
+        <div class= "scrolly-text">
+        <p>The most common delay was 7 minutes, but at times, delays soared to 20 minutes, and on the rare occurence: 2 hours.</p>
+            
+    </div>
+</div>
+
+
+    <script src="https://unpkg.com/scrollama"></script>
+    <script src="script.js"></script>
+</body>
+</html>
