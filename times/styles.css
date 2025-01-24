@@ -1,0 +1,41 @@
+.dot-line-container {
+    width: 100%;
+    overflow-x: auto; /* Allow scrolling if the line of dots is too long */
+    padding: 10px 0;
+    text-align: center;
+}
+
+.dot-line {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #4caf50; /* Green for delay */
+    transition: transform 0.3s ease;
+}
+
+.dot-line .delay-7 {
+    background-color: #f44336; /* Red for 7-minute delay */
+}
+
+.dot-line .delay-6 {
+    background-color: #ff9800; /* Orange for 6-minute delay */
+}
+
+.dot-line .delay-8 {
+    background-color: #2196f3; /* Blue for 8-minute delay */
+}
+
+.dot-line .delay-9 {
+    background-color: #9c27b0; /* Purple for 9-minute delay */
+}
+
+.dot-line .delay-10 {
+    background-color: #ff5722; /* Dark orange for 10-minute delay */
+}

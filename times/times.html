@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How long are delays?</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+      
+        .dot-line-container {
+            display: flex;
+            justify-content: center; 
+            padding: 20px;
+            overflow-x: auto; 
+            margin: 0 auto;
+            gap: 15px; 
+        }
+
+       
+        .dot-group {
+            text-align: center;
+            position: relative;
+        }
+
+        
+        .dot-line {
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: nowrap; 
+            gap: 5px; 
+            margin-top: 5px;
+            padding: 5px 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            position: relative;
+            opacity: 0;
+            animation: showGroup 1s forwards; 
+        }
+
+    
+        @keyframes showGroup {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+    
+        .dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            animation: blink 1s infinite alternate;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        
+        .delay-6 {
+            background-color: #FFCC80; 
+        }
+
+        .delay-7 {
+            background-color: #FF9800; 
+        }
+
+        .delay-8 {
+            background-color: #FF5722; 
+        }
+
+        .delay-9 {
+            background-color: #F44336; 
+        }
+
+        .delay-10 {
+            background-color: #D32F2F; 
+        }
+
+       
+        @keyframes blink {
+            0% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+     
+        .tooltip {
+            display: none;
+            font-family: 'Lato', sans-serif;
+            font-weight: 'bold'; 
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.75);
+            color: white;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+       
+        body {
+            font-family: 'Lato', sans-serif;
+            font-weight: 'bold'
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            padding-top: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .label {
+            font-family: 'Lato', sans-serif; 
+            font-weight: bold; 
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>How long are delays?</h1>
+    
+    <div class="dot-line-container">
+
+        <div class="dot-group" id="group-6">
+            <div class="label">6 minute delay</div>
+            <div class="dot-line" id="delay-6"></div>
+        </div>
+
+        <div class="dot-group" id="group-7">
+            <div class="label">7 minute delay</div>
+            <div class="dot-line" id="delay-7"></div>
+        </div>
+
+        <div class="dot-group" id="group-8">
+            <div class="label">8 minute delay</div>
+            <div class="dot-line" id="delay-8"></div>
+        </div>
+
+        <div class="dot-group" id="group-9">
+            <div class="label">9 minute delay</div>
+            <div class="dot-line" id="delay-9"></div>
+        </div>
+
+        <div class="dot-group" id="group-10">
+            <div class="label">10 minute delay</div>
+            <div class="dot-line" id="delay-10"></div>
+        </div>
+    </div>
+
+   
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+      
+        const delayData = [
+            { delayTime: 6, count: 5751 },
+            { delayTime: 7, count: 6800 },
+            { delayTime: 8, count: 5472 },
+            { delayTime: 9, count: 3876 },
+            { delayTime: 10, count: 2792 }
+        ];
+
+        
+        const totalDots = 20;
+
+       
+        const totalDelays = delayData.reduce((total, item) => total + item.count, 0);
+
+        
+        const dotsPerDelay = delayData.map(item => {
+            return Math.round((item.count / totalDelays) * totalDots); 
+        });
+
+        
+        let totalGeneratedDots = dotsPerDelay.reduce((acc, num) => acc + num, 0);
+        let difference = totalDots - totalGeneratedDots;
+
+      
+        while (difference !== 0) {
+            const adjustmentIndex = dotsPerDelay.indexOf(Math.min(...dotsPerDelay));
+            if (difference > 0) {
+                dotsPerDelay[adjustmentIndex]++;
+            } else {
+                dotsPerDelay[adjustmentIndex]--;
+            }
+            difference = totalDots - dotsPerDelay.reduce((acc, num) => acc + num, 0);
+        }
+
+       
+        function generateDelayDots() {
+            
+            delayData.forEach((item, index) => {
+                const dotLineContainer = document.getElementById(`delay-${item.delayTime}`);
+
+                
+                for (let i = 0; i < dotsPerDelay[index]; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot', `delay-${item.delayTime}`);
+                    dotLineContainer.appendChild(dot);
+                }
+            });
+        }
+
+        // Function to show the tooltip with information on hover
+        function showTooltip(e, delayTime, count) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'block';
+            tooltip.style.left = `${e.pageX + 10}px`;
+            tooltip.style.top = `${e.pageY + 10}px`;
+            tooltip.textContent = `Trains delayed by ${delayTime} minutes: ${count}`;
+        }
+
+        // Function to hide the tooltip
+        function hideTooltip() {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'none';
+        }
+
+        // Add event listeners for showing and hiding tooltips
+        document.querySelectorAll('.dot-line').forEach((dotLine, index) => {
+            const { delayTime, count } = delayData[index];
+            dotLine.addEventListener('mouseover', (e) => showTooltip(e, delayTime, count));
+            dotLine.addEventListener('mouseout', hideTooltip);
+        });
+
+        // Call the function to generate the dots when the page loads
+        window.onload = generateDelayDots;
+    </script>
+
+</body>
+</html>
